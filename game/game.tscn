@@ -1,0 +1,177 @@
+[gd_scene load_steps=12 format=3 uid="uid://b525ommwerrvr"]
+
+[ext_resource type="Script" path="res://game/game.gd" id="1_44n8x"]
+[ext_resource type="PackedScene" uid="uid://cuboxfof3ohgq" path="res://player/player.tscn" id="1_m5jlk"]
+[ext_resource type="PackedScene" uid="uid://cl5sjjj4webke" path="res://asteroid/asteroid.tscn" id="2_tqk5g"]
+[ext_resource type="FontFile" uid="uid://dseogibnkh3r5" path="res://fonts/NESCyrillic.ttf" id="4_e43wc"]
+[ext_resource type="Texture2D" uid="uid://b5n3n6kjrpla3" path="res://sprites/full_health.png" id="5_cp8dj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_keckd"]
+font = ExtResource("4_e43wc")
+font_size = 48
+font_color = Color(0.85098, 0.341176, 0.388235, 1)
+shadow_color = Color(0.360905, 0.0997264, 0.130528, 1)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jk8rm"]
+font = ExtResource("4_e43wc")
+font_size = 80
+outline_size = 7
+outline_color = Color(0.85098, 0.341176, 0.388235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_86rvk"]
+font = ExtResource("4_e43wc")
+font_size = 48
+font_color = Color(0.85098, 0.341176, 0.388235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fud03"]
+bg_color = Color(0.85098, 0.341176, 0.388235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kp47j"]
+bg_color = Color(0.85098, 0.341176, 0.388235, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2tkj"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.85098, 0.341176, 0.388235, 1)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_44n8x")
+asteroidScene = ExtResource("2_tqk5g")
+
+[node name="Player" parent="." instance=ExtResource("1_m5jlk")]
+position = Vector2(640, 360)
+
+[node name="AsteroidTimer" type="Timer" parent="."]
+
+[node name="Asteroids" type="Node" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreMargin" type="MarginContainer" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -318.0
+offset_bottom = 88.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 48
+
+[node name="ScoreLabel" type="Label" parent="UI/HUD/ScoreMargin"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "SCORE: 0"
+label_settings = SubResource("LabelSettings_keckd")
+
+[node name="HPMargin" type="MarginContainer" parent="UI/HUD"]
+layout_mode = 1
+offset_right = 85.0
+offset_bottom = 44.0
+scale = Vector2(3, 3)
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+
+[node name="HPContainer" type="HBoxContainer" parent="UI/HUD/HPMargin"]
+layout_mode = 2
+
+[node name="HP1" type="TextureRect" parent="UI/HUD/HPMargin/HPContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_cp8dj")
+stretch_mode = 3
+
+[node name="HP2" type="TextureRect" parent="UI/HUD/HPMargin/HPContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_cp8dj")
+stretch_mode = 3
+
+[node name="HP3" type="TextureRect" parent="UI/HUD/HPMargin/HPContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_cp8dj")
+stretch_mode = 3
+
+[node name="GameOver" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverContainer" type="VBoxContainer" parent="UI/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -207.0
+offset_right = 288.0
+offset_bottom = 207.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelMargin" type="MarginContainer" parent="UI/GameOver/GameOverContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_bottom = 32
+
+[node name="GameOverLabel" type="Label" parent="UI/GameOver/GameOverContainer/LabelMargin"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_jk8rm")
+
+[node name="FinalScoreMargin" type="MarginContainer" parent="UI/GameOver/GameOverContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 32
+
+[node name="FinalScoreLabel" type="Label" parent="UI/GameOver/GameOverContainer/FinalScoreMargin"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Final Score: 100"
+label_settings = SubResource("LabelSettings_86rvk")
+
+[node name="TryagainMargin" type="MarginContainer" parent="UI/GameOver/GameOverContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 32
+
+[node name="TryagainButton" type="Button" parent="UI/GameOver/GameOverContainer/TryagainMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.85098, 0.341176, 0.388235, 1)
+theme_override_fonts/font = ExtResource("4_e43wc")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/hover = SubResource("StyleBoxFlat_fud03")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kp47j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_b2tkj")
+text = "Try Again"
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="AsteroidTimer" to="." method="_on_asteroid_timer_timeout"]
+[connection signal="pressed" from="UI/GameOver/GameOverContainer/TryagainMargin/TryagainButton" to="." method="_on_tryagain_button_pressed"]
