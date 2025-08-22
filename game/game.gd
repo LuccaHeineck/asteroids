@@ -146,7 +146,7 @@ func _on_asteroid_exploded(pos, size) -> void:
 			await show_transition("HOW LONG WILL YOU STAY HERE FOR?", 2.5, true)
 		elif level == 17:
 			await show_transition("FOREVER", 2.5, true)
-			await show_transition("THE ONLY SCAPE IS DEATH", 2.5, true)
+			await show_transition("DEATH IS THE ONLY ESCAPE", 2.5, true)
 		elif level == 20:
 			await show_transition("CONGRATULATIONS", 2.5, true)
 			await show_transition("YOU HAVE WON", 2.5, true)
@@ -213,28 +213,24 @@ func game_over():
 
 
 func show_transition(text: String, duration, reset: bool = false) -> void:
-	var should_pause = (level > 0)  # don't pause on LEVEL 0
+	var should_pause = (level > 0)  # not pausing at level 0 because it bugs the stars
 
 	if should_pause:
 		Engine.time_scale = 0.0  
 
-	# Set text and show cover
 	screen_cover_text.text = text
 	screen_cover_transition.visible = true
 
-	# Small wait so the cover is fully visible before we clear/spawn
 	await get_tree().process_frame
 
 	if reset:
-		# Clear old asteroids and reset player while covered
 		for asteroid in asteroids.get_children():
 			asteroid.queue_free()
 		player.reset()
 
-	# Wait for 1.5s in real time while covered
+	# Wait while transition happens
 	await get_tree().create_timer(duration, false, false, true).timeout
 
-	# Hide the cover and resume gameplay
 	screen_cover_transition.visible = false
 	if should_pause:
 		Engine.time_scale = 1.0
@@ -248,10 +244,10 @@ func _on_music_finished():
 	music_player.play()
 
 
-func frame_freeze(time_scale, duration):
-	Engine.time_scale = time_scale
-	await get_tree().create_timer(duration * time_scale).timeout
-	Engine.time_scale = 1
+#func frame_freeze(time_scale, duration):
+#	Engine.time_scale = time_scale
+#	await get_tree().create_timer(duration * time_scale).timeout
+#	Engine.time_scale = 1
 
 
 func load_highscore() -> void:
