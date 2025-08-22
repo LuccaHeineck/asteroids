@@ -8,6 +8,7 @@ extends Node2D
 @onready var hp1 = $UI/HUD/HPMargin/HPContainer/HP1
 @onready var hp2 = $UI/HUD/HPMargin/HPContainer/HP2
 @onready var hp3 = $UI/HUD/HPMargin/HPContainer/HP3
+@onready var ui = $UI
 @onready var game_over_screen = $UI/GameOver
 @onready var hud = $UI/HUD
 @onready var final_score = $UI/GameOver/GameOverContainer/FinalScoreMargin/FinalScoreLabel
@@ -15,6 +16,8 @@ extends Node2D
 @onready var explosion_player = $ExplosionPlayer
 @onready var screen_cover_transition = $ScreenCoverTransition
 @onready var screen_cover_text = $ScreenCoverTransition/ColorRect/Label
+@onready var menu = $Menu
+@onready var menu_highscore = $Menu/Control/HighscoreTitle
 
 var game_is_over := false
 var empty_hp_texture := preload("res://sprites/empty_health.png")
@@ -30,14 +33,17 @@ var highscore: int = 0
 
 
 func _ready() -> void:
+	player.hide()
+	ui.hide()
 	screen_size = get_viewport_rect().size
 	music_player.connect("finished", _on_music_finished)
 	music_player.play()
 	load_highscore()
-	new_game()
-
+	menu_highscore.text = "HIGHSCORE: %s" % highscore
 
 func new_game():
+	ui.show()
+	menu.hide()
 	score_label.text = "SCORE: " + str(score)
 	game_is_over = false
 	score = 0
@@ -260,3 +266,7 @@ func save_highscore() -> void:
 	if file:
 		file.store_32(highscore)
 		file.close()
+
+
+func _on_start_button_pressed() -> void:
+	new_game()

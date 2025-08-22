@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b525ommwerrvr"]
+[gd_scene load_steps=22 format=3 uid="uid://b525ommwerrvr"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_44n8x"]
 [ext_resource type="PackedScene" uid="uid://cuboxfof3ohgq" path="res://player/player.tscn" id="1_m5jlk"]
@@ -86,6 +86,16 @@ shader_parameter/blur = 0.15
 [sub_resource type="LabelSettings" id="LabelSettings_qxtvd"]
 font = ExtResource("4_e43wc")
 font_size = 80
+font_color = Color(0.85098, 0.341176, 0.388235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7uiq8"]
+font = ExtResource("4_e43wc")
+font_size = 112
+font_color = Color(0.85098, 0.341176, 0.388235, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bk2gn"]
+font = ExtResource("4_e43wc")
+font_size = 32
 font_color = Color(0.85098, 0.341176, 0.388235, 1)
 
 [node name="Game" type="Node2D"]
@@ -271,6 +281,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="ScreenCoverTransition" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ScreenCoverTransition"]
 anchors_preset = 15
@@ -299,6 +310,78 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Menu"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Menu/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -201.0
+offset_right = 246.0
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ASTEROIDS"
+label_settings = SubResource("LabelSettings_7uiq8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartMargin" type="MarginContainer" parent="Menu/Control"]
+offset_left = 368.0
+offset_top = 368.0
+offset_right = 920.0
+offset_bottom = 552.0
+size_flags_vertical = 3
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 32
+
+[node name="StartButton" type="Button" parent="Menu/Control/StartMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.85098, 0.341176, 0.388235, 1)
+theme_override_fonts/font = ExtResource("4_e43wc")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/hover = SubResource("StyleBoxFlat_fud03")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kp47j")
+theme_override_styles/normal = SubResource("StyleBoxFlat_b2tkj")
+text = "Start"
+
+[node name="HighscoreTitle" type="Label" parent="Menu/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.0
+offset_top = -104.0
+offset_right = 242.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HIGHSCORE: 0"
+label_settings = SubResource("LabelSettings_bk2gn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_asteroid_timer_timeout"]
 [connection signal="pressed" from="UI/GameOver/GameOverContainer/TryagainMargin/TryagainButton" to="." method="_on_tryagain_button_pressed"]
+[connection signal="pressed" from="Menu/Control/StartMargin/StartButton" to="." method="_on_start_button_pressed"]
