@@ -111,7 +111,7 @@ func _on_asteroid_exploded(pos, size) -> void:
 		next_level_score += 1000
 		
 		if level == 4:
-			await show_transition("YOU CAN KEEP GOING… BUT IT'S JUST MORE ASTEROIDS", 2.5, true)
+			await show_transition("YOU CAN KEEP GOING... BUT IT'S JUST MORE ASTEROIDS", 2.5, true)
 		elif level == 5:
 			await show_transition(". . .", 2.5, true)
 		elif level == 6:
