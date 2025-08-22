@@ -271,6 +271,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="ScreenCoverTransition" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ScreenCoverTransition"]
 anchors_preset = 15
@@ -287,17 +288,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -533.0
-offset_top = -29.0
-offset_right = 533.0
-offset_bottom = 30.0
+offset_left = -48.5
+offset_top = -6.0
+offset_right = 48.5
+offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "IS IT WORTH IT"
 label_settings = SubResource("LabelSettings_qxtvd")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="AsteroidTimer" to="." method="_on_asteroid_timer_timeout"]

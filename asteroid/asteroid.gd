@@ -4,7 +4,11 @@ enum Size { SMALL, MEDIUM, LARGE }
 
 signal exploded(pos, size)
 
+@export var explosion_particle : PackedScene
 @export var size: Size
+
+@onready var animation_player := $AnimationPlayer
+
 var speed: float = 100.0
 var direction: Vector2
 var rotation_speed: float
@@ -53,7 +57,14 @@ func _physics_process(delta: float) -> void:
 	
 		
 func explode():
-	exploded.emit(global_position, size)
+	exploded.emit(position, size)
+	animation_player.play("death")
+	await animation_player.animation_finished
+	var particles =	explosion_particle.instantiate()
+	particles.position = position
+	particles.rotation = rotation
+	particles.emitting = true
+	get_tree().current_scene.add_child(particles)
 	queue_free()
 
 

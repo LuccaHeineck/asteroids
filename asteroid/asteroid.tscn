@@ -1,15 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://cl5sjjj4webke"]
+[gd_scene load_steps=8 format=3 uid="uid://cl5sjjj4webke"]
 
 [ext_resource type="Texture2D" uid="uid://c4as3bmnwu1oh" path="res://sprites/asteroid.png" id="1_80vfp"]
 [ext_resource type="Script" path="res://asteroid/asteroid.gd" id="1_b7kyi"]
+[ext_resource type="PackedScene" uid="uid://b5eb3lykrhlb7" path="res://particles/explosion.tscn" id="2_24tbt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x28g2"]
 radius = 17.0294
+
+[sub_resource type="Animation" id="Animation_lvytl"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_7l8uw"]
+resource_name = "death"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2moi0"]
+_data = {
+"RESET": SubResource("Animation_lvytl"),
+"death": SubResource("Animation_7l8uw")
+}
 
 [node name="Asteroid" type="Area2D"]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_b7kyi")
+explosion_particle = ExtResource("2_24tbt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
@@ -17,5 +44,10 @@ texture = ExtResource("1_80vfp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_x28g2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2moi0")
+}
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
