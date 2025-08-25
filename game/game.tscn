@@ -270,6 +270,7 @@ lifetime = 140.0
 preprocess = 280.0
 
 [node name="PostProcess" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="PostProcess"]
 material = SubResource("ShaderMaterial_ohk6u")
